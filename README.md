@@ -2,10 +2,6 @@
 
 This is an example application showing how to use the [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) with [WebRTC](https://platform.openai.com/docs/guides/realtime-webrtc).
 
-The included demo now initializes the voice assistant with instructions aimed at
-supporting older adults. When a session starts, the model is instructed to hold
-friendly conversations that help reduce loneliness and encourage mental
-elasticity.
 
 ## Installation and usage
 
@@ -34,6 +30,16 @@ This application is a minimal template that uses [express](https://expressjs.com
 This application shows how to send and receive Realtime API events over the WebRTC data channel and configure client-side function calling. You can also view the JSON payloads for client and server events using the logging panel in the UI.
 
 For a more comprehensive example, see the [OpenAI Realtime Agents](https://github.com/openai/openai-realtime-agents) demo built with Next.js, using an agentic architecture inspired by [OpenAI Swarm](https://github.com/openai/swarm).
+
+## Development
+
+Linting is not currently configured for this project. Running `npm run lint` will
+simply display a message and exit without error:
+
+```bash
+$ npm run lint
+No linting configured
+```
 
 ## Previous WebSockets version
 

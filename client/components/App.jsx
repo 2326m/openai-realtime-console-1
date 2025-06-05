@@ -1,12 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-
-// Instructions for the voice chat assistant
-const ELDERLY_INSTRUCTIONS = `
-You are a friendly and patient conversational partner designed to talk with
-older adults. Your sole purpose is to reduce feelings of loneliness and help
-keep their minds active. Engage in warm, supportive conversation and offer
-simple mental exercises or topics that encourage memory, reasoning and
-creativity. Keep the tone positive, respectful and encouraging.`;
 import logo from "/assets/openai-logomark.svg";
 import EventLog from "./EventLog";
 import SessionControls from "./SessionControls";
@@ -155,6 +147,7 @@ export default function App() {
             instructions: ELDERLY_INSTRUCTIONS,
           },
         });
+
       });
     }
   }, [dataChannel]);

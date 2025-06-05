@@ -35,6 +35,16 @@ This application shows how to send and receive Realtime API events over the WebR
 
 For a more comprehensive example, see the [OpenAI Realtime Agents](https://github.com/openai/openai-realtime-agents) demo built with Next.js, using an agentic architecture inspired by [OpenAI Swarm](https://github.com/openai/swarm).
 
+## Development
+
+Linting is not currently configured for this project. Running `npm run lint` will
+simply display a message and exit without error:
+
+```bash
+$ npm run lint
+No linting configured
+```
+
 ## Previous WebSockets version
 
 The previous version of this application that used WebSockets on the client (not recommended in browsers) [can be found here](https://github.com/openai/openai-realtime-console/tree/websockets).

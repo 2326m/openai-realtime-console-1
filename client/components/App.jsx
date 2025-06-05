@@ -17,7 +17,6 @@ export default function App() {
     const data = await tokenResponse.json();
     const EPHEMERAL_KEY = data.client_secret.value;
 
-
     // Create a peer connection
     const pc = new RTCPeerConnection();
 

@@ -187,6 +187,14 @@ export default function App() {
       dataChannel.addEventListener("open", () => {
         setIsSessionActive(true);
         setEvents([]);
+        // Provide initial instructions for the voice assistant
+        sendClientEvent({
+          type: "session.update",
+          session: {
+            instructions: ELDERLY_INSTRUCTIONS,
+          },
+        });
+
       });
     }
   }, [dataChannel]);

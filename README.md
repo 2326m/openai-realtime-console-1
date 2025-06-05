@@ -2,7 +2,7 @@
 
 This is an example application showing how to use the [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) with [WebRTC](https://platform.openai.com/docs/guides/realtime-webrtc).
 
-The included demo now initializes the voice assistant with guidance aimed at
+The included demo now initializes the voice assistant with instructions aimed at
 supporting older adults. When a session starts, the model is instructed to hold
 friendly conversations that help reduce loneliness and encourage mental
 elasticity.

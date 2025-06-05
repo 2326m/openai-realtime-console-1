@@ -148,11 +148,11 @@ export default function App() {
       dataChannel.addEventListener("open", () => {
         setIsSessionActive(true);
         setEvents([]);
-        // Provide initial guidance for the voice assistant
+        // Provide initial instructions for the voice assistant
         sendClientEvent({
           type: "session.update",
           session: {
-            system: ELDERLY_INSTRUCTIONS,
+            instructions: ELDERLY_INSTRUCTIONS,
           },
         });
       });

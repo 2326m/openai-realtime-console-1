@@ -2,6 +2,11 @@
 
 This is an example application showing how to use the [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) with [WebRTC](https://platform.openai.com/docs/guides/realtime-webrtc).
 
+The included demo now initializes the voice assistant with guidance aimed at
+supporting older adults. When a session starts, the model is instructed to hold
+friendly conversations that help reduce loneliness and encourage mental
+elasticity.
+
 ## Installation and usage
 
 Before you begin, you'll need an OpenAI API key - [create one in the dashboard here](https://platform.openai.com/settings/api-keys). Create a `.env` file from the example file and set your API key in there:

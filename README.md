@@ -10,6 +10,15 @@ Before you begin, you'll need an OpenAI API key - [create one in the dashboard h
 cp .env.example .env
 ```
 
+The `.env` file can also specify a default Realtime voice with the `VOICE`
+environment variable. For example:
+
+```bash
+echo "VOICE=sage" >> .env
+```
+You can override this at runtime by passing a `voice` query parameter to
+`/token`.
+
 Running this application locally requires [Node.js](https://nodejs.org/) to be installed. Install dependencies for the application with:
 
 ```bash

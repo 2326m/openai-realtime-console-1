@@ -17,8 +17,17 @@ export default function App() {
   const [events, setEvents] = useState([]);
   const [dataChannel, setDataChannel] = useState(null);
   const [instructionsSent, setInstructionsSent] = useState(false);
+  const [userData, setUserData] = useState(null);
   const peerConnection = useRef(null);
   const audioElement = useRef(null);
+
+  // load persisted summaries
+  useEffect(() => {
+    fetch("/userdata")
+      .then((res) => res.json())
+      .then((data) => setUserData(data))
+      .catch((e) => console.error("Failed to fetch user data", e));
+  }, []);
 
   async function startSession() {
     // Get a session token for OpenAI Realtime API
@@ -72,6 +81,36 @@ export default function App() {
   function stopSession() {
     if (dataChannel) {
       dataChannel.close();
+    }
+
+    // create a simple text summary of the conversation
+    const summaryLines = events
+      .filter(
+        (e) =>
+          e.type === "conversation.item.create" &&
+          e.item &&
+          e.item.type === "message" &&
+          e.item.content &&
+          e.item.content[0]?.text,
+      )
+      .map((e) => `${e.item.role}: ${e.item.content[0].text}`)
+      .reverse();
+    const summary = summaryLines.join("\n");
+    if (summary.trim()) {
+      fetch("/userdata", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ summary }),
+      })
+        .then(() => {
+          setUserData((prev) => ({
+            summaries: [
+              ...(prev?.summaries || []),
+              { summary, timestamp: new Date().toISOString() },
+            ],
+          }));
+        })
+        .catch((e) => console.error("Failed to save summary", e));
     }
 
     peerConnection.current.getSenders().forEach((sender) => {
@@ -157,13 +196,17 @@ export default function App() {
 
     const firstEvent = events[events.length - 1];
     if (!instructionsSent && firstEvent.type === "session.created") {
-      sendClientEvent({
+      const instructions = {
         type: "session.update",
         session: { instructions: COMPANION_INSTRUCTIONS },
-      });
+      };
+      if (userData && userData.summaries && userData.summaries.length > 0) {
+        instructions.session.instructions += `\nPrevious conversation summaries: ${JSON.stringify(userData.summaries)}`;
+      }
+      sendClientEvent(instructions);
       setInstructionsSent(true);
     }
-  }, [events, instructionsSent]);
+  }, [events, instructionsSent, userData]);
 
   useEffect(() => {
     if (!isSessionActive) {

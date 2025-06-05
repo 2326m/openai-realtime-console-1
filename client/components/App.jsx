@@ -4,10 +4,17 @@ import EventLog from "./EventLog";
 import SessionControls from "./SessionControls";
 import ToolPanel from "./ToolPanel";
 
+const COMPANION_INSTRUCTIONS = `
+  You are a friendly, proactive companion designed for older adults.
+  Keep conversations lively, ask gentle questions about the user's day,
+  and offer short cognitive exercises to help maintain mental elasticity.
+`;
+
 export default function App() {
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [events, setEvents] = useState([]);
   const [dataChannel, setDataChannel] = useState(null);
+  const [instructionsSent, setInstructionsSent] = useState(false);
   const peerConnection = useRef(null);
   const audioElement = useRef(null);
 
@@ -142,6 +149,25 @@ export default function App() {
       });
     }
   }, [dataChannel]);
+
+  useEffect(() => {
+    if (!events || events.length === 0) return;
+
+    const firstEvent = events[events.length - 1];
+    if (!instructionsSent && firstEvent.type === "session.created") {
+      sendClientEvent({
+        type: "session.update",
+        session: { instructions: COMPANION_INSTRUCTIONS },
+      });
+      setInstructionsSent(true);
+    }
+  }, [events, instructionsSent]);
+
+  useEffect(() => {
+    if (!isSessionActive) {
+      setInstructionsSent(false);
+    }
+  }, [isSessionActive]);
 
   return (
     <>
